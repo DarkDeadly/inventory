@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 
-const ProductCard = ({ listProducts , UserRole }) => {
+const ProductCard = ({ listProducts, UserRole }) => {
   const imageUrl =
     typeof listProducts.images === "string"
       ? listProducts.images
       : URL.createObjectURL(listProducts.images);
+
   useEffect(() => {
     return () => {
       if (typeof listProducts.images !== "string") {
@@ -12,30 +13,33 @@ const ProductCard = ({ listProducts , UserRole }) => {
       }
     };
   }, [listProducts.images, imageUrl]);
+
   return (
-    <div className="productEl w-[30%] h-full relative  rounded-xl">
-      <div>
-        <img src={imageUrl} alt="product" className='w-full  brightness-50 rounded-xl' />
+    <div className="productEl w-full relative rounded-xl ">
+      <div className="product-image-container">  {/* New class for styling */}
+        <img
+          src={imageUrl}
+          alt="product"
+          className="object-cover w-full min-h-full rounded-xl brightness-50"
+        />
       </div>
-      <div className='absolute top-0 flex flex-col justify-around h-full'>
-        <div className=" w-full  z-10 text-white font-bold pt-6">
-          <p className='text-2xl font-mono pl-5 '> {listProducts.name}</p>
-          <p className='text-xl font-mono pl-5'>{listProducts.entryDate}</p>
+      <div className="product-content absolute top-0 left-0 flex flex-col justify-around p-4 h-[80%]">  {/* New class and position */}
+        <div className="w-full z-10 text-white font-bold">
+          <p className="text-4xl font-mono">{listProducts.name}</p>
+          <p className="text-lg font-mono">{listProducts.entryDate}</p>
         </div>
-
-
-        <div className="flex flex-col gap-2 items-between text-white font-bold w-full">
-          <p className='pl-5 text-2xl'>price : {listProducts.price} $</p>
-          <div className="pl-5  text-2xl flex gap-2">
-            <p>Number Units : </p>
-            {UserRole.Role=='admin'&&<p>+</p>}
+        <div className="flex flex-col gap-2 items-start text-white font-bold">
+          <p>Price: {listProducts.price} $</p>
+          <div className="flex gap-2">
+            <p>Number Units: </p>
+            {UserRole.Role === 'admin' && <p>+</p>}
             <p>{listProducts.number}</p>
-            {UserRole.Role=='admin'&&<p>-</p>}
+            {UserRole.Role === 'admin' && <p>-</p>}
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductCard
+export default ProductCard;

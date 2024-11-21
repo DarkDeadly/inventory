@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./register.css"
 import Inputs from '../components/Inputs'
 import Buttons from '../components/Buttons'
@@ -8,12 +8,25 @@ import {useFormik} from "formik"
 const Register = () => {
     const [ShowPassw, setShowPass] = useState(false) 
     const [ShowCPassw, setShowCPass] = useState(false) 
+    const [RegisteredData, setRegisteredData] = useState([
+      {
+        email : "omrianis2@gmail.com",
+        username : "anisomri"
+      }
+    ])
     const Formik = useFormik(
-        {initialValues : {email : "" , password : "" , confirmPass : "" , username : ""},
+        {initialValues : {email : "" , password : "" , confirmPass : "" , username : "" , Role : "user"},
         validate : validation,
         onSubmit : values => {
-            console.log(values)
-          Navigate("/")
+          setRegisteredData([...RegisteredData , values])
+          const existingEmail = RegisteredData.find((item) => item.email === values.email)
+          if (existingEmail) {
+            alert("Email already exists please try again")
+          }
+          if (!existingEmail) {
+            localStorage.setItem("RegisteredItems" , JSON.stringify(RegisteredData))
+            Navigate("/")
+          }
         }
       }
     )
@@ -24,6 +37,7 @@ const Register = () => {
     const HandleConfirmShow = () => {
         setShowCPass(!ShowCPassw)
       }
+      
   return (
     <div className='min-h-screen w-full bg-[#EBEAFF] flex justify-center items-center'>
         <div className="h-[90%] w-[90%] flex bg-[#9694FF]">

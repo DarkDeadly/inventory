@@ -43,7 +43,13 @@ const Home = () => {
 
   return (
     <div className='min-h-screen w-full flex bg-[#EBEAFF]'>
-      <div className="min-h-full w-[15%] bg-[#9694FF] rounded-tr-xl rounded-br-xl"></div>
+      <div className="min-h-full w-[15%] bg-[#9f9ef8] rounded-tr-xl rounded-br-xl flex flex-col justify-evenly">
+        <h1 className='text-4xl text-black max-[1204px]:text-2xl'>StockSense</h1>
+        <div className="links text-xl text-white flex flex-col gap-5 ">
+        <p className='py-2 border border-white hover:bg-[#8c8beb]'>profile</p>
+        {User.Role == 'admin' &&<p className='py-2 border border-white hover:bg-[#8c8beb]'>Admin Dashboard</p>}
+      </div>
+      </div>
       <div className="right min-h-full w-[100%] bg-transparent">
         <div className="StockHeader flex justify-between   items-center pb-2 px-7">
           <h1 className= {`text-4xl text-black ${User.Role !=="admin"&&'py-2'}`}>StockSense</h1>
@@ -113,7 +119,7 @@ const Home = () => {
            
 
           </div>
-          <div className="ProductElements border-2  w-full min-h-full flex gap-2 justify-start flex-wrap">
+          <div className="ProductElements grid grid-cols-3 gap-4 max-[988px]:grid-cols-2 max-[678px]:grid-cols-1">
            {FilteredProduct.map((product , index) => (
             <ProductCard listProducts = {product} key={index} UserRole = {User}/>
            ))}
